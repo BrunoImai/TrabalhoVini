@@ -71,7 +71,7 @@ class UsersController(val service: UsersService) {
     @GetMapping("/{id}/events")
     fun listEventsFromUser(@PathVariable id: Long): ResponseEntity<List<EventResponse>> = ResponseEntity.ok(service.listAllEventsFromUser(id)!!.map { it.toResponse() })
 
-    // TODO CRIAR UM CONTROLLER PARA LISTAR TODOS OS EVENTOS
+
     @GetMapping("/events/{id}")
     fun getEventById(@PathVariable id: Long) =
         service.findEventById(id)

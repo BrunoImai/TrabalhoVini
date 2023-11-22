@@ -1,6 +1,6 @@
 package br.pucpr.authserver.events
 
-import br.pucpr.authserver.events.requests.CategoryRequest
+import br.pucpr.authserver.events.response.CategoryResponse
 import jakarta.persistence.*
 
 @Entity
@@ -17,5 +17,5 @@ class Category (
     val events : MutableList<Event>,
     )
 {
-    fun toResponse() = CategoryRequest(name)
+    fun toResponse() = CategoryResponse(id, name)
 }

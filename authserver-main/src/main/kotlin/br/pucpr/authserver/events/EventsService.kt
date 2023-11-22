@@ -19,7 +19,7 @@ class EventsService(
     val jwt: Jwt
 ) {
 
-    private fun getUserIdFromToken(): Long {
+    fun getUserIdFromToken(): Long {
         val authentication = jwt.extract(request)
 
         return authentication?.let {
@@ -31,6 +31,12 @@ class EventsService(
     fun findAllEvents(): List<Event> = eventRepository.findAll()
 
     fun findEventById(id: Long) = eventRepository.findByIdOrNull(id)
+
+    fun findAllEventsOrderedByName(): List<Event> {
+        return eventRepository.findAllEventsSortedByName()
+    }
+
+    // Categories
 
     fun findEventsByCategory(categoryId: Long) = eventRepository.findByCategoryId(categoryId)
 
@@ -50,6 +56,8 @@ class EventsService(
         val category = categoryRepository.findByIdOrNull(id) ?: throw IllegalStateException("Category don't exists!")
         return categoryRepository.delete(category)
     }
+
+    fun findAllCategories(): List<Category> = categoryRepository.findAll()
 
     companion object {
         val log = LoggerFactory.getLogger(UsersService::class.java)

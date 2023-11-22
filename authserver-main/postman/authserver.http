@@ -6,13 +6,13 @@ POST localhost:8080/api/users
 Content-Type: application/json
 
 {
-  "name": "Bruno Imai",
-  "email": "BrunoImai@gmail.com",
-  "password": "password"
+  "name": "Vini",
+  "email": "Vini@gmail.com",
+  "password": "vini0000"
 }
 
 ### Lista o usuário 2
-GET localhost:8080/api/users/3
+GET localhost:8080/api/users/102
 
 ### Lista o próprio usuário
 GET localhost:8080/api/users/me
@@ -23,8 +23,8 @@ POST localhost:8080/api/users/login
 Content-Type: application/json
 
 {
-  "email": "BrunoImai@gmail.com",
-  "password": "password"
+  "email": "Vini@gmail.com",
+  "password": "vini0000"
 }
 > {%
     client.global.set("token", response.body.token)
@@ -32,19 +32,6 @@ Content-Type: application/json
 %}
 
 ### Login como Admin
-POST localhost:8080/api/users/login
-Content-Type: application/json
-
-{
-  "email": "admin@authserver.com",
-  "password": "admin"
-}
-> {%
-    client.global.set("token", response.body.token)
-    client.global.set("id", response.body.user.id)
-%}
-
-### Login com admin
 POST localhost:8080/api/users/login
 Content-Type: application/json
 
@@ -71,5 +58,19 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "Festa"
+  "name": "Rpg"
+}
+
+### Cria evento
+POST localhost:8080/api/users/events
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Rpg",
+  "local": "Minha casa",
+  "hour": "12:00",
+  "description": "Traga os dados",
+  "creatorId": 102,
+  "categoryId": 56
 }

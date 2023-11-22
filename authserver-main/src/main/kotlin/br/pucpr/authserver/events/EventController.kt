@@ -1,9 +1,8 @@
 package br.pucpr.authserver.events
 
 import br.pucpr.authserver.events.requests.CategoryRequest
+import br.pucpr.authserver.events.response.CategoryResponse
 import br.pucpr.authserver.events.response.EventResponse
-import br.pucpr.authserver.users.UsersService
-import br.pucpr.authserver.users.requests.UserRequest
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -34,6 +33,14 @@ class EventController(val service: EventsService) {
         return ResponseEntity.ok().build()
     }
 
+    @GetMapping("/sorted")
+    fun listEventsSortedByName(): ResponseEntity<List<EventResponse>> {
+        val sortedEvents = service.findAllEventsOrderedByName()
+        return ResponseEntity.ok(sortedEvents.map { it.toResponse() })
+    }
+
+
+    // Categories
     @PostMapping("/category")
     fun createCategory(@Valid @RequestBody req: CategoryRequest) =
         service.createCategory(req)!!
@@ -41,4 +48,6 @@ class EventController(val service: EventsService) {
             .let { ResponseEntity.status(HttpStatus.CREATED).body(it) }
 
 
+    @GetMapping("/category")
+    fun listCategories(): ResponseEntity<List<CategoryResponse>> = ResponseEntity.ok(service.findAllCategories().map { it.toResponse() })
 }
